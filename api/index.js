@@ -37,19 +37,41 @@ app.get('/tutor/trabajador/:codigoTrabajador', (req, res) => {
 })
 
 // creacion de tutoria
-app.get('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
+app.post('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
     let codigoTutor = req.params.codigoTutor;
     let codigoTrabajador = req.params.codigoTrabajador;
     
     // query para verificar que el trabajador corresponde al tutor
     let query1 = 'SELECT e.* FROM employees e '+
     'INNER JOIN employees m ON (e.manager_id = m.employee_id) '+
-    'WHERE e.employee_id = '+codigoTrabajador+' AND m.employee_id = '+codigoTutor;
+    'WHERE e.employee_id = ? AND m.employee_id = ?';
+    let params1 = [codigoTrabajador, codigoTutor];
 
-    conn.query(query1, (err, results) => {
+    conn.query(query1, params1, (err, results) => {
         if (err) throw err;
         if (results && results.length > 0){
-            res.json(results);
+
+            let query2 = 'SELECT * FROM employees WHERE meeting = 0 AND employee_id = ?';
+            let params2 = [codigoTrabajador];
+
+            conn.query(query2, params2, (err, results) => {
+                if (err) throw err;
+                if (results && results.length > 0){
+
+                    let query3 = 'UPDATE employees SET meeting = 1, meeting_date = DATE_ADD(CURRENT_TIMESTAMP, interval 5 minute) '+
+                    'WHERE employee_id = ?';
+                    let params3 = [codigoTrabajador];
+
+                    conn.query(query3, params3, (err, results) => {
+                        if (err) throw err;
+                        res.json({'result':'ok'})
+                    })
+                }
+                else{
+                    res.json({'error':'trabajador ocupado'});
+                }
+            })
+            
         }
         else{
             res.json({'error':'trabajador invalido'});

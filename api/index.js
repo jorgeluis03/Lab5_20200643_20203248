@@ -37,11 +37,24 @@ app.get('/tutor/trabajador/:codigoTrabajador', (req, res) => {
 })
 
 // creacion de tutoria
-app.post('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
+app.get('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
     let codigoTutor = req.params.codigoTutor;
     let codigoTrabajador = req.params.codigoTrabajador;
     
-    
+    // query para verificar que el trabajador corresponde al tutor
+    let query1 = 'SELECT e.* FROM employees e '+
+    'INNER JOIN employees m ON (e.manager_id = m.employee_id) '+
+    'WHERE e.employee_id = '+codigoTrabajador+' AND m.employee_id = '+codigoTutor;
+
+    conn.query(query1, (err, results) => {
+        if (err) throw err;
+        if (results && results.length > 0){
+            res.json(results);
+        }
+        else{
+            res.json({'error':'trabajador invalido'});
+        }
+    })
 })
 
 app.listen(PORT, () => {

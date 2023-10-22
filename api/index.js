@@ -40,7 +40,8 @@ app.get('/tutor/trabajador/:codigoTrabajador', (req, res) => {
 app.post('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
     let codigoTutor = req.params.codigoTutor;
     let codigoTrabajador = req.params.codigoTrabajador;
-    console.log(codigoTutor+" "+codigoTrabajador);
+    
+    
 })
 
 app.listen(PORT, () => {

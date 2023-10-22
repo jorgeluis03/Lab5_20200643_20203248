@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,7 +14,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab5_20200643_20203248"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".trabajador.TrabajadorFeedback"
+            android:exported="false"
+            android:parentActivityName=".trabajador.Trabajador"/>
+        <activity
+            android:name=".trabajador.Trabajador"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".tutor.TutorAsigarTutoria"
+            android:exported="false"
+            android:parentActivityName=".tutor.Tutor"/>
+        <activity
+            android:name=".tutor.TutorBuscarTrabajador"
+            android:exported="false"
+            android:parentActivityName=".tutor.Tutor"/>
+        <activity
+            android:name=".tutor.TutorListarTrabajadores"
+            android:exported="false"
+            android:parentActivityName=".tutor.Tutor"/>
+        <activity
+            android:name=".tutor.Tutor"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

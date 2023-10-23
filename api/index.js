@@ -35,7 +35,7 @@ app.get('/tutor/trabajador/:codigo', (req, res) => {
     let params = [codigoTrabajador]
     conn.query(query, params, (err, results) => {
         if (err) throw err;
-        res.json(results[0]);
+        res.json(results);
     })
 })
 

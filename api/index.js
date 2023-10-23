@@ -64,17 +64,35 @@ app.post('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
 
                     conn.query(query3, params3, (err, results) => {
                         if (err) throw err;
-                        res.json({'result':'ok'})
+                        res.json({'msg':'ok'})
                     })
                 }
                 else{
-                    res.json({'error':'trabajador ocupado'});
+                    res.json({'msg':'Error: trabajador ocupado'});
                 }
             })
             
         }
         else{
-            res.json({'error':'trabajador invalido'});
+            res.json({'msg':'Error: trabajador inválido'});
+        }
+    })
+})
+
+app.post('/trabajador/tutoria/:codigoTrabajador', (req, res) => {
+    let codigoTrabajador = req.params.codigoTrabajador;
+    let query1 = 'SELECT * FROM employees '+
+    'WHERE meeting = 1 AND meeting_date < CURRENT_TIMESTAMP AND employee_feedback is null AND employee_id = ?';
+    let params1 = [codigoTrabajador];
+
+    conn.query(query1, params1, (err, results) => {
+        if (err) throw err;
+        if (results && results.length > 0){
+
+            let query2 = 'UPDATE employees SET employee'
+        }
+        else{
+            res.json({'msg':'Error: tutoria inválida'})
         }
     })
 })

@@ -44,6 +44,18 @@ app.post('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
     
 })
 
+
+
+// retorna informacion de trabajador
+app.get('/trabajador/:codigoTrabajador', (req, res) => {
+    let codigoTrabajador = req.params.codigoTrabajador;
+    let query = 'SELECT * FROM employees WHERE employees.employee_id = '+codigoTrabajador;
+    conn.query(query, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    })
+})
+
 app.listen(PORT, () => {
     console.log('Servidor corriendo en ',PORT);
 })

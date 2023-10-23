@@ -22,7 +22,40 @@
         app:navigationIcon="?android:attr/homeAsUpIndicator"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <LinearLayout
+        android:id="@+id/consultarTrabajdor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarTrabajador">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldCodigoTrabajador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Ingrese su codigo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            style="?attr/materialIconButtonStyle"
+            android:id="@+id/buttonConsultarTrabajador"
+            android:layout_weight="0"
+            android:text="Buscar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imagenTrabaja"
@@ -33,7 +66,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/icon_trabajador"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarTrabajador"/>
+        app:layout_constraintTop_toBottomOf="@+id/consultarTrabajdor"/>
+    <TextView
+        android:id="@+id/textViewNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagenTrabaja"/>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardDescargaHorarios"
@@ -46,7 +91,7 @@
         android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenTrabaja">
+        app:layout_constraintTop_toBottomOf="@+id/textViewNombre">
 
         <LinearLayout
             android:layout_width="match_parent"

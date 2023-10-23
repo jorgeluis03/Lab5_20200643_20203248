@@ -18,20 +18,22 @@ conn.connect(err => {
 });
 
 // retorna lista de trabajadores de tutor en especifico
-app.get('/tutor/:codigoTutor', (req, res) => {
-    let codigoTutor = req.params.codigoTutor;
-    let query = 'SELECT * FROM employees WHERE employees.manager_id = '+codigoTutor;
-    conn.query(query, (err, results) => {
+app.get('/tutor/:codigo', (req, res) => {
+    let codigoTutor = req.params.codigo;
+    let query = 'SELECT * FROM employees WHERE employees.manager_id = ?';
+    let params = [codigoTutor];
+    conn.query(query, params, (err, results) => {
         if (err) throw err;
         res.json(results);
     })
 })
 
 // retorna informacion de trabajador en especifico
-app.get('/tutor/trabajador/:codigoTrabajador', (req, res) => {
-    let codigoTrabajador = req.params.codigoTrabajador;
-    let query = 'SELECT * FROM employees WHERE employees.employee_id = '+codigoTrabajador;
-    conn.query(query, (err, results) => {
+app.get('/tutor/trabajador/:codigo', (req, res) => {
+    let codigoTrabajador = req.params.codigo;
+    let query = 'SELECT * FROM employees WHERE employees.employee_id = ?';
+    let params = [codigoTrabajador]
+    conn.query(query, params, (err, results) => {
         if (err) throw err;
         res.json(results);
     })

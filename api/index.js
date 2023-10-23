@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const app = express();
 
@@ -79,8 +80,10 @@ app.post('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
     })
 })
 
-app.post('/trabajador/tutoria/:codigoTrabajador', (req, res) => {
-    let codigoTrabajador = req.params.codigoTrabajador;
+app.post('/trabajador/tutoria/', bodyParser.urlencoded({extended: true}), (req, res) => {
+    let codigoTrabajador = req.body.codigoTrabajador;
+    let feedback = req.body.feedback;
+
     let query1 = 'SELECT * FROM employees '+
     'WHERE meeting = 1 AND meeting_date < CURRENT_TIMESTAMP AND employee_feedback is null AND employee_id = ?';
     let params1 = [codigoTrabajador];
@@ -89,7 +92,13 @@ app.post('/trabajador/tutoria/:codigoTrabajador', (req, res) => {
         if (err) throw err;
         if (results && results.length > 0){
 
-            let query2 = 'UPDATE employees SET employee'
+            let query2 = 'UPDATE employees SET employee_feedback = ? WHERE employee_id = ?'
+            let params2 = [feedback, codigoTrabajador];
+
+            conn.query(query2, params2, (err, results) => {
+                if (err) throw err;
+                res.json({'msg':'ok'});
+            })
         }
         else{
             res.json({'msg':'Error: tutoria inválida'})

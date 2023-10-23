@@ -82,6 +82,20 @@ app.post('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
     })
 })
 
+app.get('/trabajador/tutoria/:codigo', (req, res) => {
+    let query = 'SELECT * FROM employees WHERE meeting = 1 AND meeting_date is not null AND employee_id = ?'
+    let params = [req.params.codigo];
+
+    conn.query(query, params, (err, results) => {
+        if (err) throw err;
+        if (results && results.length){
+            res.json({'msg':'ok'});
+        }else{
+            res.json({'msg':'No cuenta con tutoria'})
+        }
+    })
+})
+
 app.post('/trabajador/tutoria/', bodyParser.urlencoded({extended: true}), (req, res) => {
     let codigoTrabajador = req.body.codigoTrabajador;
     let feedback = req.body.feedback;

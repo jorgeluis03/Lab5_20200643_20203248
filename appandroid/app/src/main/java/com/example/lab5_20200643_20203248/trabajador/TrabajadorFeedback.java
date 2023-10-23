@@ -64,7 +64,12 @@ public class TrabajadorFeedback extends AppCompatActivity {
             public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                 if (response.isSuccessful()){
                     HashMap<String, String> root = response.body();
-
+                    switch (root.get("msg")){
+                        case "ok":
+                            break;
+                        case "Tutoria inválida":
+                            break;
+                    }
                 }
             }
 

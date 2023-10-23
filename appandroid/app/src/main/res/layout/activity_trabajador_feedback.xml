@@ -51,13 +51,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Escribe">
+            android:hint="Escribe (Max caracteres: 250)">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:gravity="top|start"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:maxLength="250" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

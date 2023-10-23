@@ -9,32 +9,59 @@ import androidx.core.content.ContextCompat;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.example.lab5_20200643_20203248.R;
 import com.example.lab5_20200643_20203248.databinding.ActivityTrabajadorDescargarHorarioBinding;
+import com.example.lab5_20200643_20203248.services.TrabajadorService;
 
 import java.io.File;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TrabajadorDescargarHorario extends AppCompatActivity {
-    ActivityTrabajadorDescargarHorarioBinding binding;
+    private ActivityTrabajadorDescargarHorarioBinding binding;
+    private TrabajadorService trabajadorService;
+    private final String HOST = "192.168.1.9";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityTrabajadorDescargarHorarioBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         Toolbar toolbar = findViewById(R.id.toolbarTrabajdorHorario);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        trabajadorService = new Retrofit.Builder()
+                .baseUrl("http://"+HOST+":8080")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(TrabajadorService.class);
+
         binding.buttonDecargarHorario.setOnClickListener(v -> {
-            String permission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE; //si no funciona android.Manifest.permission…
-            launcher.launch(permission);
+            if (accesoInternet()){
+                String codigoTrabajador = binding.inputCodigoTrabajador.getEditText().getText().toString();
+                fetchExisteTutoria(codigoTrabajador);
+
+                //String permission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE; //si no funciona android.Manifest.permission…
+                //launcher.launch(permission);
+            }
+            else{
+                Toast.makeText(TrabajadorDescargarHorario.this, "Error: Verifique su conexión con internet", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -76,6 +103,37 @@ public class TrabajadorDescargarHorario extends AppCompatActivity {
             //si no tiene permisos
             launcher.launch(permission);
         }
+    }
+
+    private void fetchExisteTutoria(String codigoTrabajador){
+        trabajadorService.getTutoria(Integer.parseInt(codigoTrabajador)).enqueue(new Callback<HashMap<String, String>>() {
+            @Override
+            public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
+                if (response.isSuccessful()){
+                    HashMap<String, String> root = response.body();
+                    switch (root.get("msg")){
+                        case "ok": // puede descargar los horarios
+                            break;
+                        case "No cuenta con tutoria": // ejecutar notificacion
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HashMap<String, String>> call, Throwable t) {
+                Log.d("msg-test", "error: "+t.getMessage());
+            }
+        });
+    }
+
+    private boolean accesoInternet(){
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
+        boolean tieneInternet = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+        return tieneInternet;
     }
 
 }

@@ -19,10 +19,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".trabajador.TrabajadorDescargarHorario"
-            android:exported="false"
-            android:parentActivityName=".trabajador.Trabajador"/>
-        <activity
             android:name=".trabajador.TrabajadorFeedback"
             android:exported="false"
             android:parentActivityName=".trabajador.Trabajador" />

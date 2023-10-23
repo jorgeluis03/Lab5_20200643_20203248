@@ -2,19 +2,26 @@ package com.example.lab5_20200643_20203248.trabajador;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lab5_20200643_20203248.R;
 import com.example.lab5_20200643_20203248.databinding.ActivityTrabajadorFeedbackBinding;
+import com.example.lab5_20200643_20203248.entity.TrabajadorEntity;
 import com.example.lab5_20200643_20203248.services.TrabajadorService;
 import com.example.lab5_20200643_20203248.services.TutorService;
 import com.example.lab5_20200643_20203248.tutor.TutorAsigarTutoria;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashMap;
 
@@ -27,7 +34,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TrabajadorFeedback extends AppCompatActivity {
     private ActivityTrabajadorFeedbackBinding binding;
     private TrabajadorService trabajadorService;
-    private final String HOST = "192.168.1.9";
+    private final String HOST = "192.168.18.44";
+    String IDcanalTrabajador = "channelTrabajador";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +47,23 @@ public class TrabajadorFeedback extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        TrabajadorEntity trabajador = (TrabajadorEntity) getIntent().getSerializableExtra("trabajador");
+
+
         trabajadorService = new Retrofit.Builder()
                 .baseUrl("http://"+HOST+":8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(TrabajadorService.class);
 
+
         binding.buttonEnviar.setOnClickListener(v -> {
             if (accesoInternet()){
-                String codigoTrabajador = binding.inputCodigoTrabajadorFeedback.getEditText().getText().toString();
+                String codigoTrabajador = String.valueOf(trabajador.getEmployee_id());
                 String feedback = binding.textAreaFeedback.getEditText().getText().toString();
+
+                Log.d("msg-test",codigoTrabajador);
+                Log.d("msg-test",feedback);
                 postFeedback(codigoTrabajador, feedback);
             }
             else{
@@ -66,6 +81,9 @@ public class TrabajadorFeedback extends AppCompatActivity {
                     HashMap<String, String> root = response.body();
                     switch (root.get("msg")){
                         case "ok":
+                            Log.d("msg-test","respues ok");
+                            //lanzarNotificacion(IDcanalTrabajador,"Feecback Trabajador","Feedback enviado de manera exitosa");
+
                             break;
                         case "Tutoria inválida": // cuando la tutoria ya tiene feedback o la tutoria aun no transcurre (fecha tutoria > fecha actual)
                             break;
@@ -79,7 +97,20 @@ public class TrabajadorFeedback extends AppCompatActivity {
             }
         });
     }
+    private void lanzarNotificacion(String channel, String title, String content) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel)
+                .setSmallIcon(R.drawable.icon_inicio)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
 
+        Notification notification = builder.build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(1, notification);
+    }
     private boolean accesoInternet(){
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 

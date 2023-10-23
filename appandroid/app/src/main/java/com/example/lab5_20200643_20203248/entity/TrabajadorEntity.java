@@ -1,8 +1,9 @@
 package com.example.lab5_20200643_20203248.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TrabajadorEntity {
+public class TrabajadorEntity implements Serializable {
 
     private int employee_id;
     private String first_name;

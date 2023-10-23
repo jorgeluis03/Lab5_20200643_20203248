@@ -71,13 +71,13 @@ app.post('/tutor/tutorias/:codigoTutor/:codigoTrabajador', (req, res) => {
                     })
                 }
                 else{
-                    res.json({'msg':'Error: trabajador ocupado'});
+                    res.json({'msg':'Trabajador ocupado'});
                 }
             })
             
         }
         else{
-            res.json({'msg':'Error: trabajador inválido'});
+            res.json({'msg':'Trabajador inválido'});
         }
     })
 })
@@ -103,7 +103,7 @@ app.post('/trabajador/tutoria/', bodyParser.urlencoded({extended: true}), (req, 
             })
         }
         else{
-            res.json({'msg':'Error: tutoria inválida'})
+            res.json({'msg':'Tutoria inválida'})
         }
     })
 })

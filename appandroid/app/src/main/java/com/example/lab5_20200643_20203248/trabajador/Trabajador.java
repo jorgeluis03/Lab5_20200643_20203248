@@ -23,7 +23,9 @@ public class Trabajador extends AppCompatActivity {
 
 
         binding.cardDescargaHorarios.setOnClickListener(view -> {
-            //Descargar imagen
+
+            Intent intent = new Intent(this, TrabajadorDescargarHorario.class);
+            startActivity(intent);
         });
 
         binding.cardFeedback.setOnClickListener(view -> {

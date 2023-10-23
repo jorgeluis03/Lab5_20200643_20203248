@@ -10,5 +10,8 @@ import retrofit2.http.Path;
 
 public interface TutorService {
     @GET("/tutor/{codigo}")
-    public Call<List<TrabajadorEntity>> getTrabajadores(@Path("codigo") int codigo);
+    Call<List<TrabajadorEntity>> getTrabajadores(@Path("codigo") int codigo);
+
+    @GET("/tutor/trabajador/{codigo}")
+    Call<List<TrabajadorEntity>> getTrabajador(@Path("codigo") int codigo);
 }

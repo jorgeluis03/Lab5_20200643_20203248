@@ -67,7 +67,7 @@ public class TrabajadorFeedback extends AppCompatActivity {
                     switch (root.get("msg")){
                         case "ok":
                             break;
-                        case "Tutoria inválida":
+                        case "Tutoria inválida": // cuando la tutoria ya tiene feedback o la tutoria aun no transcurre (fecha tutoria > fecha actual)
                             break;
                     }
                 }

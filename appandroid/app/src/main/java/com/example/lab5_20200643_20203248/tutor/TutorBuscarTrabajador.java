@@ -14,7 +14,11 @@ import com.example.lab5_20200643_20203248.R;
 import com.example.lab5_20200643_20203248.databinding.ActivityTutorBuscarTrabajadorBinding;
 import com.example.lab5_20200643_20203248.entity.TrabajadorEntity;
 import com.example.lab5_20200643_20203248.services.TutorService;
+import com.google.gson.Gson;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -78,7 +82,17 @@ public class TutorBuscarTrabajador extends AppCompatActivity {
     }
 
     private void guardarEnMemoria(TrabajadorEntity trabajador){
+        Gson gson = new Gson();
+        String trabajadorJson = gson.toJson(trabajador);
+        String fileName = "informacionDe"+trabajador.getEmployee_id();
 
+        try (FileOutputStream fileOutputStream = this.openFileOutput(fileName, Context.MODE_PRIVATE);
+             FileWriter fileWriter = new FileWriter(fileOutputStream.getFD())){
+            fileWriter.write(trabajadorJson);
+            Toast.makeText(TutorBuscarTrabajador.this, "Información de trabajador guardada", Toast.LENGTH_SHORT).show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     private boolean accesoInternet(){

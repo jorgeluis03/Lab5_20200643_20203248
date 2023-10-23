@@ -62,11 +62,11 @@ public class TutorAsigarTutoria extends AppCompatActivity {
             public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                 if (response.isSuccessful()){
                     HashMap<String, String> root = response.body();
-                    switch (root.get("msg")){
-                        case "Trabajador inválido":
+                    switch (root.get("msg")){ // envio de notificaciones
+                        case "Trabajador inválido": // el tutor no es manager del trabajador
 
                             break;
-                        case "Trabajador ocupado":
+                        case "Trabajador ocupado": // el trabajdor ya tiene tutoria
 
                             break;
                         case "ok":

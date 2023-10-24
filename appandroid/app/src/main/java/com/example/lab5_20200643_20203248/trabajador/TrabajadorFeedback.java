@@ -34,6 +34,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TrabajadorFeedback extends AppCompatActivity {
     private ActivityTrabajadorFeedbackBinding binding;
     private TrabajadorService trabajadorService;
+    TrabajadorEntity trabajador;
+    TextView fechaTutoria;
+    TextInputLayout textInputFeedback;
     private final String HOST = "192.168.18.44";
     String IDcanalTrabajador = "channelTrabajador";
 
@@ -47,8 +50,7 @@ public class TrabajadorFeedback extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TrabajadorEntity trabajador = (TrabajadorEntity) getIntent().getSerializableExtra("trabajador");
-
+        textInputFeedback = binding.textAreaFeedback;
 
         trabajadorService = new Retrofit.Builder()
                 .baseUrl("http://"+HOST+":8080")
@@ -56,20 +58,35 @@ public class TrabajadorFeedback extends AppCompatActivity {
                 .build()
                 .create(TrabajadorService.class);
 
+        trabajador = (TrabajadorEntity) getIntent().getSerializableExtra("trabajador");
+        if(trabajador.getEmployee_feedback()!=null){
 
-        binding.buttonEnviar.setOnClickListener(v -> {
-            if (accesoInternet()){
-                String codigoTrabajador = String.valueOf(trabajador.getEmployee_id());
-                String feedback = binding.textAreaFeedback.getEditText().getText().toString();
+            textInputFeedback.getEditText().setText(trabajador.getEmployee_feedback());
+            textInputFeedback.setEnabled(false);
 
-                Log.d("msg-test",codigoTrabajador);
-                Log.d("msg-test",feedback);
-                postFeedback(codigoTrabajador, feedback);
-            }
-            else{
-                Toast.makeText(TrabajadorFeedback.this, "Error: Verifique su conexión con internet", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }else {
+            binding.buttonEnviar.setOnClickListener(v -> {
+
+                if (accesoInternet()){
+
+
+                    String codigoTrabajador = String.valueOf(trabajador.getEmployee_id());
+                    String feedback = binding.textAreaFeedback.getEditText().getText().toString();
+
+                    postFeedback(codigoTrabajador, feedback);
+                    textInputFeedback.setEnabled(false);
+                }
+                else{
+                    Toast.makeText(TrabajadorFeedback.this, "Error: Verifique su conexión con internet", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+
+
+
+
 
     }
 
@@ -82,8 +99,7 @@ public class TrabajadorFeedback extends AppCompatActivity {
                     switch (root.get("msg")){
                         case "ok":
                             Log.d("msg-test","respues ok");
-                            //lanzarNotificacion(IDcanalTrabajador,"Feecback Trabajador","Feedback enviado de manera exitosa");
-
+                            lanzarNotificacion(IDcanalTrabajador,"Feecback Trabajador","Feedback enviado de manera exitosa");
                             break;
                         case "Tutoria inválida": // cuando la tutoria ya tiene feedback o la tutoria aun no transcurre (fecha tutoria > fecha actual)
                             break;

@@ -42,7 +42,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Trabajador extends AppCompatActivity {
-    private static final String HOST = "192.168.18.44";
+    private final String HOST = "10.0.2.2";
     ActivityTrabajadorBinding binding;
     TrabajadorService trabajadorService;
     TextView nombreTrabajador;

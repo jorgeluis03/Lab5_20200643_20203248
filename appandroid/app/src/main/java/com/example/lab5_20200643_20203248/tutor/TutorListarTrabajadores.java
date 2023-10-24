@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TutorListarTrabajadores extends AppCompatActivity {
     private ActivityTutorListarTrabajadoresBinding binding;
     private TutorService tutorService;
-    private final String HOST = "192.168.1.9";
+    private final String HOST = "10.0.2.2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class TutorListarTrabajadores extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<TrabajadorEntity>> call, Throwable t) {
+                Toast.makeText(TutorListarTrabajadores.this, "Ocurrió un error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("msg-test", "error: "+t.getMessage());
             }
         });

@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TutorAsigarTutoria extends AppCompatActivity {
     private ActivityTutorAsigarTutoriaBinding binding;
     private TutorService tutorService;
-    private final String HOST = "192.168.1.9";
+    private final String HOST = "10.0.2.2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

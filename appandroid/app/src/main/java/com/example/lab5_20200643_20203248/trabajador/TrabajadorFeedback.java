@@ -7,7 +7,6 @@ import androidx.core.app.NotificationCompat;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,8 +18,6 @@ import com.example.lab5_20200643_20203248.R;
 import com.example.lab5_20200643_20203248.databinding.ActivityTrabajadorFeedbackBinding;
 import com.example.lab5_20200643_20203248.entity.TrabajadorEntity;
 import com.example.lab5_20200643_20203248.services.TrabajadorService;
-import com.example.lab5_20200643_20203248.services.TutorService;
-import com.example.lab5_20200643_20203248.tutor.TutorAsigarTutoria;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashMap;
@@ -37,7 +34,7 @@ public class TrabajadorFeedback extends AppCompatActivity {
     TrabajadorEntity trabajador;
     TextView fechaTutoria;
     TextInputLayout textInputFeedback;
-    private final String HOST = "192.168.18.44";
+    private final String HOST = "10.0.2.2";
     String IDcanalTrabajador = "channelTrabajador";
 
     @Override
@@ -102,6 +99,7 @@ public class TrabajadorFeedback extends AppCompatActivity {
                             lanzarNotificacion(IDcanalTrabajador,"Feecback Trabajador","Feedback enviado de manera exitosa");
                             break;
                         case "Tutoria inválida": // cuando la tutoria ya tiene feedback o la tutoria aun no transcurre (fecha tutoria > fecha actual)
+                            Toast.makeText(TrabajadorFeedback.this, " La tutoria aún no se lleva a cabo o ya cuenta con un feedback", Toast.LENGTH_SHORT).show();
                             break;
                     }
                 }

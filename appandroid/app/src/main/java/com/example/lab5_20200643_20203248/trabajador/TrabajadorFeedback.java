@@ -32,7 +32,6 @@ public class TrabajadorFeedback extends AppCompatActivity {
     private ActivityTrabajadorFeedbackBinding binding;
     private TrabajadorService trabajadorService;
     TrabajadorEntity trabajador;
-    TextView fechaTutoria;
     TextInputLayout textInputFeedback;
     private final String HOST = "10.0.2.2";
     String IDcanalTrabajador = "channelTrabajador";

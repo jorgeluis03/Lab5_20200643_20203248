@@ -7,6 +7,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -51,7 +52,12 @@ public class TutorBuscarTrabajador extends AppCompatActivity {
         binding.buttonDescargar.setOnClickListener(v -> {
             if (accesoInternet()){
                 String codigo = binding.inputCodigoTrabajador.getEditText().getText().toString();
-                fetchTrabajador(codigo);
+                if (!TextUtils.isEmpty(codigo)){
+                    fetchTrabajador(codigo);
+                }
+                else{
+                    Toast.makeText(TutorBuscarTrabajador.this, "Ingrese el código de un trabajador", Toast.LENGTH_SHORT).show();
+                }
             }
             else{
                 Toast.makeText(TutorBuscarTrabajador.this, "Error: Verifique su conexión con internet", Toast.LENGTH_SHORT).show();

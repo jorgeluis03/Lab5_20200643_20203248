@@ -7,6 +7,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -47,7 +48,12 @@ public class TutorAsigarTutoria extends AppCompatActivity {
             if (accesoInternet()){
                 String codigoTutor = binding.inputCoidigoTutor.getEditText().getText().toString();
                 String codigoTrabajador = binding.inputCoidigoTrabajador.getEditText().getText().toString();
-                postTutoria(codigoTutor, codigoTrabajador);
+                if (!TextUtils.isEmpty(codigoTutor) && !TextUtils.isEmpty(codigoTrabajador)){
+                    postTutoria(codigoTutor, codigoTrabajador);
+                }
+                else {
+                    Toast.makeText(TutorAsigarTutoria.this, "Ingrese su código de tutor y el de un trabajador", Toast.LENGTH_SHORT).show();
+                }
             }
             else{
                 Toast.makeText(TutorAsigarTutoria.this, "Error: Verifique su conexión con internet", Toast.LENGTH_SHORT).show();

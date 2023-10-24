@@ -32,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TutorAsigarTutoria extends AppCompatActivity {
     private ActivityTutorAsigarTutoriaBinding binding;
     private TutorService tutorService;
-    private final String HOST = "10.100.249.241";
+    private final String HOST = "10.0.2.2";
     String IDcanalTutor = "channelTutor";
     Button asignar;
 

@@ -65,12 +65,12 @@ public class TrabajadorFeedback extends AppCompatActivity {
 
                 if (accesoInternet()){
 
-
                     String codigoTrabajador = String.valueOf(trabajador.getEmployee_id());
                     String feedback = binding.textAreaFeedback.getEditText().getText().toString();
 
                     postFeedback(codigoTrabajador, feedback);
                     textInputFeedback.setEnabled(false);
+                    binding.buttonEnviar.setEnabled(false);
                 }
                 else{
                     Toast.makeText(TrabajadorFeedback.this, "Error: Verifique su conexión con internet", Toast.LENGTH_SHORT).show();
@@ -78,11 +78,6 @@ public class TrabajadorFeedback extends AppCompatActivity {
             });
 
         }
-
-
-
-
-
 
     }
 

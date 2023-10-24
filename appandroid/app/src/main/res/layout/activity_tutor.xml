@@ -162,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="Asiganr Tutoria"
+                    android:text="Asignar Tutoria"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
 

@@ -92,7 +92,6 @@ public class TutorListarTrabajadores extends AppCompatActivity {
              FileWriter fileWriter = new FileWriter(fileOutputStream.getFD())){
             fileWriter.write(trabajadoresJson);
             Toast.makeText(TutorListarTrabajadores.this, "Lista de trabajadores guardada", Toast.LENGTH_SHORT).show();
-            finish();
         }catch (IOException e){
             e.printStackTrace();
         }

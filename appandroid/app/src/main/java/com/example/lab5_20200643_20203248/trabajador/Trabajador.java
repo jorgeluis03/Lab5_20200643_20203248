@@ -42,6 +42,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Trabajador extends AppCompatActivity {
+    private static final String HOST = "192.168.18.44";
     ActivityTrabajadorBinding binding;
     TrabajadorService trabajadorService;
     TextView nombreTrabajador;
@@ -63,7 +64,7 @@ public class Trabajador extends AppCompatActivity {
 
 
         trabajadorService = new Retrofit.Builder()
-                .baseUrl("http://192.168.18.44:8080")
+                .baseUrl("http://"+HOST+":8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(TrabajadorService.class);
